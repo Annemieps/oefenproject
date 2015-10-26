@@ -5,13 +5,11 @@
         <title></title>
     </head>
     <body>
-        <form action="tafels.php" method="post">
+        <form action="tafels.php" method="get">
             <label for="grondtal">Grondtal</label>
             <input type="text" name="grondtal">
-            <button type="submit" name="submit">ok</button>
+            <button type="submit" name="submit">insturen</button>
         </form>
-        <?php
-        
-        ?>
+      
     </body>
 </html>
