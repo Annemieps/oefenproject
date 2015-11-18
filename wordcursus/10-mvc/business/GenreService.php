@@ -1,5 +1,5 @@
 <?php
-require_once '../data/GenreDAO.php';
+require_once("data/GenreDAO.php");
 
 class GenreService {
     public function getGenresOverzicht(){

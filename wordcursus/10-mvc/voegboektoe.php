@@ -13,5 +13,5 @@ if (isset($_GET["action"]) && $_GET["action"] == "process") {
 } else {
 	$genreSvc = new GenreService();
 	$genreLijst = $genreSvc->getGenresOverzicht();
-	include("presentation/nieuwboekForm.php");
+	include("presentation/nieuweboekform.php");
 }

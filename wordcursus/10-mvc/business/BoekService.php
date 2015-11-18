@@ -8,4 +8,9 @@ class BoekService{
         return $lijst;
     }
     
+    public function voegNieuwBoekToe($titel, $genreId) {
+	$boekDAO = new BoekDAO();
+	$boekDAO->create($titel, $genreId);
+    }
+        
 }
