@@ -45,6 +45,8 @@ class BoekDAO {
             return $boek;
         }       
         
+        
+        //maken van boek, de insert
         public function create($titel, $genreId) {
             $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USERNAME,  
                     DBConfig::$DB_PASSWORD);
@@ -54,14 +56,24 @@ class BoekDAO {
             $stmt = $dbh->prepare($sql);
             $stmt->execute(array(':titel' => $titel, ':genreId' => $genreId));
 
-            //lastinsertid??
+            //id van de net ingevoerde boek
             $boekId = $dbh->lastInsertId();
             $dbh = null;
 
+            //genre id ophalen voor het boek
             $genreDAO = new GenreDAO();
             $genre = $genreDAO->getById($genreId);
+            //creer boek aan de hand van boekid,titel en genre
             $boek = Boek::create($boekId, $titel, $genre);
             return $boek;
+        }
+        
+        public function delete($id){
+            $dba=new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USERNAME,DBConfig::$DB_PASSWORD);
+            $sql="delete from mvc_boeken where id = :id";
+            $stmt = $dba->prepare($sql);
+            $stmt->execute(array('id' => $id));
+            $dba=null;
         }
 
 	

@@ -28,6 +28,11 @@
 					<td>
 						<?php print($boek->getGenre()->getGenreNaam());?>
 					</td>
+                                        <td>
+                                            <a href="verwijderboek.php?id=<?php echo $boek->getId(); ?>">
+                                            verwijder
+                                            </a>
+                                        </td>
 				</tr>
 				<?php
 			}
