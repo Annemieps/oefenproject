@@ -75,6 +75,17 @@ class BoekDAO {
             $stmt->execute(array('id' => $id));
             $dba=null;
         }
+        
+        public function update($boek){
+            $dba=new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USERNAME,DBConfig::$DB_PASSWORD);
+            $sql="update mvc_boeken SET titel = :titel, genre_id = :genreId WHERE id = :id";
+            $stmt=$dba->prepare($sql);
+            $stmt->execute(array(':titel' => $boek->getTitel(),':genreId' => $boek->getGenre()->getId(), 
+                ':id'=>$boek->getId()));
+            $dba=null;
+        }
+        
+
 
 	
 }
