@@ -1,9 +1,12 @@
 <?php
+require_once 'data/userDAO.php';
 
 class UserService{
     
     public static function checkLogin($username,$wachtwoord){
-        if ($username == "admin" && $wachtwoord == "geheim"){
+       $user = userDAO::getByUsername($username);
+       
+        if (isset($user) && $user->getWachtwoord()==$wachtwoord){
             return true;
         }
         else {

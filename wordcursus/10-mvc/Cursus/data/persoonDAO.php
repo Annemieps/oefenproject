@@ -7,6 +7,7 @@ require_once("DBConfig.php");
 
 class PersoonDAO {
 
+        //ophalen effectieve inhoud van getall
 	public function getAll() {		
 		$dbh = new PDO(DBConfig::$DB_CONNSTRING,  
 			DBConfig::$DB_USERNAME, DBConfig::$DB_PASSWORD);

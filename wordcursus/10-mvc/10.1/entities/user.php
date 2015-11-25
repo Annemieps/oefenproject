@@ -11,9 +11,7 @@ class user{
         $this->wachtwoord = $wachtwoord;
     }
 
-    public static function create($id,$username,$wachtwoord){
-       
-    }
+    
     function getId() {
         return $this->id;
     }
