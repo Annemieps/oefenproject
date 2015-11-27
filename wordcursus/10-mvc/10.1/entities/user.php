@@ -4,13 +4,20 @@ class user{
     private $id;
     private $username;
     private $wachtwoord;
+    private static $idMap=array();
     
-    function __construct($id, $username, $wachtwoord) {
+    private function __construct($id, $username, $wachtwoord) {
         $this->id = $id;
         $this->username = $username;
         $this->wachtwoord = $wachtwoord;
     }
-
+    
+    public static function create($id,$username,$wachtwoord){
+         if (!isset(self::$idMap[$id])) {
+            self::$idMap[$id] = new User($id, $username, $wachtwoord);
+        }
+        return self::$idMap[$id];
+    }
     
     function getId() {
         return $this->id;
