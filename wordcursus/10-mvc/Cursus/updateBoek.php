@@ -12,11 +12,9 @@ if (isset($_GET["action"]) && $_GET["action"] == "process") {
 	exit(0);
     }
     catch (TitelBestaatException $ex){
-        header("location: updateboek.php?id=".$_GET["id"]. 
-                           "&error=titelbestaat");
-                   exit(0);
-
-   }
+        header("location: updateboek.php?id=".$_GET["id"]."&error=titelbestaat");
+         exit(0);
+    }
  
 } else {
         //nieuwe genre service
