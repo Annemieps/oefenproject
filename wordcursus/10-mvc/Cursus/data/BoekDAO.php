@@ -6,6 +6,7 @@ require_once("DBConfig.php");
 require_once("entities/Genre.php");
 require_once("entities/Boek.php");
 
+
 class BoekDAO {
 
 	public function getAll() {		
@@ -48,6 +49,11 @@ class BoekDAO {
         
         //maken van boek, de insert
         public function create($titel, $genreId) {
+            $bestaandBoek = $this->getByTitel($titel);
+            if (!is_null($bestaandBoek)) {
+                    throw new TitelBestaatException();
+            }
+
             $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USERNAME,  
                     DBConfig::$DB_PASSWORD);
             $sql = "insert into mvc_boeken (titel, genre_id)  
@@ -77,6 +83,11 @@ class BoekDAO {
         }
         
         public function update($boek){
+            $bestaandBoek = $this->getByTitel($boek->getTitel());
+            if (!is_null($bestaandBoek) && ($bestaandBoek->getId() != $boek->getId() )) {
+                    throw new TitelBestaatException();
+            }
+
             $dba=new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USERNAME,DBConfig::$DB_PASSWORD);
             $sql="update mvc_boeken SET titel = :titel, genre_id = :genreId WHERE id = :id";
             $stmt=$dba->prepare($sql);
@@ -85,6 +96,25 @@ class BoekDAO {
             $dba=null;
         }
         
+        public function getByTitel($titel) {
+	$sql = "select mvc_boeken.id as boek_id, titel, genre_id, genre  
+		from mvc_boeken, mvc_genres   
+		where genre_id = mvc_genres.id and titel = :titel";
+	$dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USERNAME,  
+		DBConfig::$DB_PASSWORD);
+	$stmt = $dbh->prepare($sql);
+        $stmt->execute(array(':titel' => $titel));
+        $rij = $stmt->fetch(PDO::FETCH_ASSOC);	
+
+	if (!$rij) {
+		return null;
+	} else {
+		$genre = Genre::create($rij["genre_id"], $rij["genre"]);
+		$boek = Boek::create($rij["boek_id"], $rij["titel"], $genre);
+		$dbh = null;
+		return $boek;
+	}
+        }
 
 
 	
